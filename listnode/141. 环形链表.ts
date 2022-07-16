@@ -7,7 +7,7 @@ class ListNode {
     }
 }
 
-
+// solution 1
 function hasCycle(head: ListNode | null): boolean {
   if(!head?.next){
       return false
@@ -20,5 +20,20 @@ function hasCycle(head: ListNode | null): boolean {
   }
   return false
 };
+
+// solution 2
+function hasCycle2(head: ListNode | null): boolean {
+    if(!head?.next){
+        return false
+    }
+    let slow = head as ListNode | null
+    let fast = head as ListNode | null
+    while (fast && fast.next) {
+        fast = fast.next.next
+        slow = slow!.next
+        if (fast === slow) return true
+    }
+    return false
+  };
 
 export {}
