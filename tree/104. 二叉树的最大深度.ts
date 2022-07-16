@@ -1,3 +1,5 @@
+import { TreeNode } from "./type"
+
 function maxDepth(root: TreeNode | null): number {
   if(root === null) return 0
   // 遍历左右子树
