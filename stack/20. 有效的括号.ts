@@ -11,6 +11,5 @@ function isValid(s:string) {
       if (stack.pop() !== s[i]) return false
     }
    }
-   if (stack.length!==0) return false
-   return true
+   return stack.length === 0 ? true : false
 };
