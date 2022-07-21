@@ -28,7 +28,7 @@ import { ListNode } from './type'
   return res.next
 };
 
-// two
+// solution 2
 const mergeTwoLists2 = function (list1: ListNode | null, list2: ListNode | null): ListNode | null {
   if (!list1) return list2
   if (!list2) return list1
