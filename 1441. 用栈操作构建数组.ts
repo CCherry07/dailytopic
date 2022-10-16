@@ -20,3 +20,4 @@ let target = [1, 3], n = 3
 
 console.log(buildArray(target, n));
 
+export { }
