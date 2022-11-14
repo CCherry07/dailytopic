@@ -8,5 +8,3 @@ function integerBreak(n: number): number {
   }
   return dp[n]
 };
-
-integerBreak(10)
