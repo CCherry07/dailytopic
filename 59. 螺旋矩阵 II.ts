@@ -10,7 +10,6 @@ function generateMatrix(n: number): number[][] {
       res[i][j] = count++
     }
     for (; j > starty; j--) {
-
       res[i][j] = count++
     }
     for (; i > startx; i--) {
@@ -20,10 +19,10 @@ function generateMatrix(n: number): number[][] {
     starty++
     offset++
   }
-  if ((n % 2) !== 0) res[startx - 1][starty - 1] = n * n
+  if ((n % 2) !== 0) {
+    const mid = Math.floor(n / 2)
+    res[mid][mid] = n * n
+  }
   return res
 }
-
-const res = generateMatrix(3)
-console.log(res);
 
