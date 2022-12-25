@@ -21,6 +21,3 @@ function isAnagram(s: string, t: string): boolean {
   return true
 
 };
-
-let s = "rat", t = "cat"
-console.log(isAnagram(s, t));
