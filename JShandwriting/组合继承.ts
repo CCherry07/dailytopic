@@ -1,17 +1,15 @@
 // @ts-nocheck
-interface AnimalObj {
+export interface AnimalObj {
   name: string
   colors: string[]
   getName(): void
 }
 
-type Animal = {
+export type Animal = {
   new(name: string): AnimalObj
 }
 
-// 原型链继承
-
-function Animal(name?: string) {
+export function Animal(name?: string) {
   this.name = name
   this.colors = ['black', 'white']
 }
@@ -20,8 +18,11 @@ Animal.prototype.getName = function () {
   console.log(this.name)
 }
 
-interface CatObj extends AnimalObj {
+export interface CatObj extends AnimalObj {
   age: number
+}
+interface Cat extends Animal {
+  new(name: string, age: number): CatObj
 }
 // 组合继承
 function Cat(name: string, age: number) {
@@ -29,13 +30,16 @@ function Cat(name: string, age: number) {
   Animal.call(this, name)
   this.age = age
 }
-// 继承方法
-Cat.prototype = new Animal()
+
+// Cat.prototype = Animal.prototype // 只继承了Animal的原型的方法
+Cat.prototype = new Animal() // 即继承了Animal的属性，又继承了Animal的方法
 // 修正constructor
 Cat.prototype.constructor = Cat
 
 const cat = new Cat('cat', 1) as CatObj
 console.log(cat);
+cat.colors.push('yellow')
+console.log(cat.colors);
 cat.getName()
 
 
