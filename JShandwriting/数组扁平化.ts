@@ -1,5 +1,5 @@
 function flatten(arr: any[]) {
-  var result: any[] = [];
+  let result: any[] = [];
   arr.forEach(el => {
     if (Array.isArray(el)) {
       result = result.concat(flatten(el))
@@ -9,3 +9,13 @@ function flatten(arr: any[]) {
   })
   return result;
 }
+
+
+// es6
+function flatten1(arr: any[]) {
+  while (arr.some(Array.isArray)) {
+    arr = [].concat(...arr)
+  }
+  return arr
+}
+
