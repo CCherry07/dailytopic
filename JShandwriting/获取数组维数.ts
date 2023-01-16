@@ -1,11 +1,13 @@
 function getArrayDimension(arr: any[]) {
   let list: any[] = []
   let dimension = 0;
-  for (let i = 0; i < arr.length; i++) {
-    if (Array.isArray(arr[i])) {
-      list = list.concat(arr[i])
-    }
-  }
+  // for (let i = 0; i < arr.length; i++) {
+  //   if (Array.isArray(arr[i])) {
+  //     list.push(...arr[i])
+  //   }
+  // }
+
+  list.push(...arr.filter(Array.isArray).flat())
 
   dimension += 1
   if (list.length > 0) {
