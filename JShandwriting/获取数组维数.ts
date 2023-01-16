@@ -7,7 +7,7 @@ function getArrayDimension(arr: any[]) {
   //   }
   // }
 
-  list.push(...arr.filter(Array.isArray).flat())
+  list.push(...arr.filter(Array.isArray).flat()) // 解一层 结构赋值
 
   dimension += 1
   if (list.length > 0) {
