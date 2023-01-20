@@ -17,15 +17,15 @@ class SortedStack {
   }
 
   pop(): void {
-    this.stack.pop();
+    this.stack.pop(); // 弹出栈顶元素
   }
 
   peek(): number {
-    return this.stack[this.stack.length - 1] || -1;
+    return this.stack[this.stack.length - 1] || -1; // 如果栈为空 返回-1
   }
 
   isEmpty(): boolean {
-    return !this.stack.length;
+    return !this.stack.length; // 如果栈为空 返回true
   }
 }
 
