@@ -1,25 +1,26 @@
 function threeSum(nums: number[]): number[][] {
-  if(nums == null || nums.length < 3) return [];
-  let resArr:number[][]=[]
-  nums.sort((a,b)=>a-b)
-  for(let i=0;i<nums.length-2;i++){
-    if(i>0 && nums[i]===nums[i-1]) continue;
-    let left = i+1;
-    let right = nums.length-1;
-    while(left<right){
-      let sum = nums[i]+nums[left]+nums[right];
-      if(sum===0){
-        resArr.push([nums[i],nums[left],nums[right]])
+  if (nums == null || nums.length < 3) return [];
+  const res: number[][] = []
+  const arr = nums.sort((a, b) => a - b)
+  const r = arr.length - 1
+  for (let i = 0; i < r - 1 && arr[i] <= 0; i++) {
+    if (i > 0 && arr[i] === arr[i - 1]) continue
+    let left = i + 1
+    let right = r
+    while (left < right) {
+      const sum = arr[i] + arr[left] + arr[right]
+      if (sum === 0) {
+        res.push([arr[i], arr[left], arr[right]])
         left++;
         right--;
-        while(left<right && nums[left]==nums[left-1]) left++;
-        while(left<right && nums[right]==nums[right+1]) right--;
-      }else if(sum<0){
-        left++;
-      }else{
-        right--;
+        while (left < right && arr[left] === arr[left - 1]) left++
+        while (left < right && arr[right] === arr[right + 1]) right--
+      } else if (sum > 0) {
+        right--
+      } else {
+        left++
       }
     }
   }
-  return resArr
+  return res
 };
