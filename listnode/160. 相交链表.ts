@@ -1,4 +1,4 @@
-import { ListNode } from './type';
+import { ListNode } from "../types/type";
 function getIntersectionNode(headA: ListNode | null, headB: ListNode | null): ListNode | null {
   let n1 = headA;
   let n2 = headB;

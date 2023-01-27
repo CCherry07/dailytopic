@@ -1,7 +1,4 @@
-interface ListNode {
-  next: ListNode | null,
-  val: number
-}
+import { ListNode } from "../types/type";
 
 class MyLinkedList {
   head: ListNode | null

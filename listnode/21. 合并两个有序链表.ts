@@ -9,7 +9,7 @@
  *     }
  * }
  */
-import { ListNode } from './type'
+import { ListNode } from "../types/type"
 function mergeTwoLists(list1: ListNode | null, list2: ListNode | null): ListNode | null {
   let res = new ListNode(0), cur = res
 

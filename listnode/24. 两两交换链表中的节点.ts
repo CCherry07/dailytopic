@@ -1,4 +1,4 @@
-import { ListNode } from "./type"
+import { ListNode } from "../types/type"
 // 1->2->3->4 => 2->1->4->3
 function swapPairs(head: ListNode | null): ListNode | null {
   const p = new ListNode(undefined, head)

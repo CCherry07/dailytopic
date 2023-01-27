@@ -1,4 +1,4 @@
-import { ListNode } from "./type";
+import { ListNode } from "../types/type";
 
 function removeNthFromEnd(head: ListNode | null, n: number): ListNode | null {
   if (!head?.next) return null

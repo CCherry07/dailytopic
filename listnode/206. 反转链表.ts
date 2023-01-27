@@ -1,4 +1,4 @@
-import { ListNode } from './type';
+import { ListNode } from "../types/type";
 // 双指针
 const reverseList = function (head: ListNode | null): ListNode | null {
   // prev 前节点, cur 当前节点
