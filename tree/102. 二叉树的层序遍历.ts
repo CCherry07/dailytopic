@@ -6,7 +6,7 @@ function levelOrder(root: TreeNode | null): number[][] {
   while (Queue.length) {
     let size = Queue.length // 本层节点数
     const tier: number[] = [] // 本层节点值
-    while (size--) { // 本层节点数
+    while (size--) { // 遍历本层节点数
       const shiftNode = Queue.shift() as TreeNode // 出队列
       tier.push(shiftNode.val) // 本层节点值
       if (shiftNode.left) Queue.push(shiftNode.left)
