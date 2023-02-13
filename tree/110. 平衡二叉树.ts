@@ -13,3 +13,18 @@ function getHight(node: TreeNode | null) {
   if (!node) return 0
   return Math.max(getHight(node.left), getHight(node.right)) + 1
 }
+
+
+function isBalanced1(root: TreeNode | null): boolean {
+  if (!root) return true
+  return Boolean(getHight(root) !== -1)
+};
+function getHight1(node: TreeNode | null) {
+  if (!node) return 0
+  const lh = getHight(node.left)
+  if (lh === -1) return -1
+  const rh = getHight(node.right)
+  if (rh === -1) return -1
+  if (Math.abs(lh - rh) > 1) return -1
+  return 1 + Math.max(lh, rh)
+}
