@@ -6,7 +6,7 @@ import { TreeNode } from "./type"
 
 function isBalanced(root: TreeNode | null): boolean {
   if (!root) return true
-  if (Math.abs(getHight(root.left) - getHight(root.right)) > 1) return false
+  if (Math.abs(getHight(root.left) - getHight(root.right)) > 1) return false // 获取左右子树的高度，如果高度差大于1，返回false
   return isBalanced(root.left) && isBalanced(root.right)
 };
 function getHight(node: TreeNode | null) {
@@ -19,6 +19,7 @@ function isBalanced1(root: TreeNode | null): boolean {
   if (!root) return true
   return Boolean(getHight(root) !== -1)
 };
+// 获取高度，当不平衡时返回-1，平衡时返回高度
 function getHight1(node: TreeNode | null) {
   if (!node) return 0
   const lh = getHight(node.left)
