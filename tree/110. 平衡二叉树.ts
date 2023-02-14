@@ -17,7 +17,7 @@ function getHight(node: TreeNode | null) {
 
 function isBalanced1(root: TreeNode | null): boolean {
   if (!root) return true
-  return Boolean(getHight(root) !== -1)
+  return Boolean(getHight1(root) !== -1)
 };
 // 获取高度，当不平衡时返回-1，平衡时返回高度
 function getHight1(node: TreeNode | null) {
