@@ -1,4 +1,4 @@
-function fakeAjax(url,cb) {
+function fakeAjax(url, cb) {
 	var fake_responses = {
 		"file1": "The first text",
 		"file2": "The middle text",
@@ -8,9 +8,9 @@ function fakeAjax(url,cb) {
 
 	console.log("Requesting: " + url);
 
-	setTimeout(function(){
+	setTimeout(function () {
 		cb(fake_responses[url]);
-	},randomDelay);
+	}, randomDelay);
 }
 
 function output(text) {
@@ -21,10 +21,22 @@ function output(text) {
 // The old-n-busted callback way
 
 function getFile(file) {
-	return new Promise(function(resolve){
-		fakeAjax(file,resolve);
+	return new Promise(function (resolve) {
+		fakeAjax(file, resolve);
 	});
 }
+
+
+['file1', 'file2', 'file3']
+	.map(getFile)
+	.reduce(function combine(chain, responsePromise) {
+
+		return chain.then(() => {
+			return responsePromise
+		}).then(output)
+
+	}, Promise.resolve())
+	.then(() => output('Complete...'))
 
 // Request all files at once in
 // "parallel" via `getFile(..)`.
