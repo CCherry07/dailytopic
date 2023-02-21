@@ -1,7 +1,7 @@
-const single = () => {
+const single = (res: number) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      resolve(2);
+      resolve(2 * res);
     }, 1000);
   });
 }
@@ -21,7 +21,8 @@ const Three = function (num: number) {
   })
 }
 
-function combinePromises(...args: ((...p: any[]) => Promise<any>)[]) {
+function combinePromises(initSate: any, ...args: ((...p: any[]) => Promise<any>)[]) {
+  const firstState = typeof initSate === 'function' ? initSate() : initSate
   return new Promise((resolve, reject) => {
     args.reduce(function combine(chain, asyncFunc) {
       const nextChain = chain.then((response) => {
@@ -31,11 +32,11 @@ function combinePromises(...args: ((...p: any[]) => Promise<any>)[]) {
         resolve(nextChain)
       }
       return nextChain
-    }, Promise.resolve())
+    }, Promise.resolve(firstState))
   })
 }
 
-combinePromises(single, double, Three)
+combinePromises(20, single, double, Three)
   .then(res => {
     console.log(res);
   })
