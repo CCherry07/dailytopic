@@ -36,6 +36,15 @@ function combinePromises(initSate: any, ...args: ((...p: any[]) => Promise<any>)
   })
 }
 
+// 一般写法
+single(20).then((res: any) => {
+  double(res).then((res: any) => {
+    Three(res).then(res => {
+      console.log(res);
+    })
+  })
+})
+// 采用组合函数 传入初始值和多个函数
 combinePromises(20, single, double, Three)
   .then(res => {
     console.log(res);
