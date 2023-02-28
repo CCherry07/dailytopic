@@ -1,4 +1,4 @@
-function fakeAjax(url,cb) {
+function fakeAjax(url, cb) {
 	var fake_responses = {
 		"file1": "The first text",
 		"file2": "The middle text",
@@ -8,9 +8,9 @@ function fakeAjax(url,cb) {
 
 	console.log("Requesting: " + url);
 
-	setTimeout(function(){
+	setTimeout(function () {
 		cb(fake_responses[url]);
-	},randomDelay);
+	}, randomDelay);
 }
 
 function output(text) {
@@ -20,8 +20,8 @@ function output(text) {
 // **************************************
 
 function getFile(file) {
-	return ASQ(function(done){
-		fakeAjax(file,done);
+	return ASQ(function (done) {
+		fakeAjax(file, done);
 	});
 }
 
@@ -32,20 +32,20 @@ function getFile(file) {
 // }
 
 ASQ()
-.runner(function *loadFiles(){
-	// Request all files at once in
-	// "parallel" via `getFile(..)`.
-	var p1 = getFile("file1");
-	var p2 = getFile("file2");
-	var p3 = getFile("file3");
+	.runner(function* loadFiles() {
+		// Request all files at once in
+		// "parallel" via `getFile(..)`.
+		var p1 = getFile("file1");
+		var p2 = getFile("file2");
+		var p3 = getFile("file3");
 
-	// Render as each one finishes,
-	// but only once previous rendering
-	// is done.
-	output( yield p1 );
-	output( yield p2 );
-	output( yield p3 );
-})
-.val(function(){
-	output("Complete!");
-});
+		// Render as each one finishes,
+		// but only once previous rendering
+		// is done.
+		output(yield p1);
+		output(yield p2);
+		output(yield p3);
+	})
+	.val(function () {
+		output("Complete!");
+	});
