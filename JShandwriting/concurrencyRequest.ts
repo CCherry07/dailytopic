@@ -2,42 +2,40 @@ interface Options {
   max: number
   [key: string]: any
 }
-interface executorCallBack<T> {
-  resolve: (value: T | PromiseLike<T>) => void,
+interface executorCallBack<S> {
+  resolve: (value: S | PromiseLike<S>) => void,
   reject: (reason?: any) => void
 }
 
 const request = (options: { url: string }) => {
-  // return new Promise((resolve, reject) => {
-  //   setTimeout(() => {
-  //     if (options.url === 'url2' || options.url === 'url3') {
-  //       reject(options.url)
-  //     }
-  //     resolve(options.url)
-  //   }, 500)
-  // })
   return fetch(options.url).then(res => res.json())
 }
 
-const concurrencyRequest = (request: (...args: any[]) => Promise<unknown>, options: Options) => {
-  const tasks: any[] = [] // task 队列
-  const executorMap: WeakMap<Record<string, any>, executorCallBack<any>> = new WeakMap()
+//写类型 获取promise 的返回值
+type PromiseType<T> = T extends Promise<infer P> ? P : T
+
+
+const concurrencyRequest = <O extends Object, R = any>(request: (args: O) => Promise<R>, options: Options) => {
+  const tasks: O[] = [] // task 队列
+  const executorMap: WeakMap<O, executorCallBack<any>> = new WeakMap()
   let running = 0
-  const max = options.max
+  const max = options.max || tasks.length
   function next() {
-    if (!tasks.length || running >= max) return
+    if (running >= max) return
     running++
-    const opt = tasks.shift()
+    const opt = tasks.shift()!
     const { resolve, reject } = executorMap.get(opt)!
-    return request(opt).then(resolve, reject).finally(() => {
-      executorMap.delete(opt)
-      running-- //不管失败还是成功running 都要--
-      if (tasks.length) {
-        next()
-      }
-    })
+    return request(opt)
+      .then(resolve, reject)
+      .finally(() => {
+        executorMap.delete(opt)
+        running-- //不管失败还是成功running 都要--
+        if (tasks.length) {
+          next()
+        }
+      })
   }
-  return <T>(opt: Record<string, any>): Promise<T> => {
+  return <T extends R>(opt: O): Promise<T> => {
     return new Promise((resolve, reject) => {
       tasks.push(opt)
       executorMap.set(opt, { resolve, reject })
@@ -56,11 +54,11 @@ for (let i = 1; i <= 12; i++) {
 }
 
 
-// run<{ url: string }>({
-//   url: "url1"
-// }).then(res => {
-//   console.log('then', res);
-// })
+run({
+  url: "url1"
+}).then(res => {
+  console.log('then', res.url);
+})
 
 // run({
 //   url: "url2"
