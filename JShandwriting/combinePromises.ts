@@ -38,7 +38,7 @@ function combinePromises(config: Config, ...args: ((...p: any[]) => Promise<any>
         return asyncFunc(response)
       }, reject)
       return nextChain
-    }, Promise.resolve(initSate))
+    }, Promise.resolve((typeof initSate === 'function' ? initSate() : initSate)))
   })
 }
 
@@ -52,7 +52,7 @@ function combinePromises(config: Config, ...args: ((...p: any[]) => Promise<any>
 // })
 // 采用组合函数 传入初始值和多个函数
 combinePromises({
-  initSate: 20,
+  initSate: async () => 20,
 }, single, double, Three)
   .then(res => {
     console.log(res);
