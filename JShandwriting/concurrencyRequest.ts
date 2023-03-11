@@ -1,5 +1,5 @@
 interface Options {
-  max?: number
+  max: number
   [key: string]: any
 }
 interface ExecutorCallBack<S> {
@@ -15,7 +15,7 @@ const concurrencyRequest = <P extends Object, R = any>(request: (args: P) => Pro
   const tasks: P[] = [] // task 队列
   const executorMap: WeakMap<P, ExecutorCallBack<any>> = new WeakMap()
   let running = 0
-  const max = options?.max || tasks.length
+  const max = options.max
   function next() {
     if (running >= max) return
     running++
@@ -35,7 +35,9 @@ const concurrencyRequest = <P extends Object, R = any>(request: (args: P) => Pro
     return new Promise((resolve, reject) => {
       tasks.push(opt)
       executorMap.set(opt, { resolve, reject })
-      next()
+      if (running === 0) {
+        next()
+      }
     })
   }
 }
@@ -44,7 +46,9 @@ const concurrencyRequest = <P extends Object, R = any>(request: (args: P) => Pro
 const run = concurrencyRequest(request, { max: 3 })
 for (let i = 1; i <= 12; i++) {
   const url = `https://jsonplaceholder.typicode.com/todos/${i}`;
-  run({ url })
+  run({ url }).then(res => {
+    console.log(res);
+  })
 }
 // const executorCallBack: ExecutorCallBack<any> = {
 //   resolve: null,
