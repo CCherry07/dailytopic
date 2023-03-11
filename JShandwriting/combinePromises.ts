@@ -22,19 +22,23 @@ const Three = function (num: number) {
   })
 }
 
-function combinePromises(initSate: any, current: (number | ((...p: any[]) => Promise<any>)), ...args: ((...p: any[]) => Promise<any>)[]) {
-  const firstState = typeof initSate === 'function' ? initSate() : initSate
-  const secondCurrent = typeof current === 'function' ? (args.unshift(current), args.length) : current
+interface Config {
+  initSate: any,
+  current?: number,
+}
+
+function combinePromises(config: Config, ...args: ((...p: any[]) => Promise<any>)[]) {
+  const { initSate, current = args.length } = config
   return new Promise((resolve, reject) => {
     args.reduce(function combine(chain, asyncFunc, currentIndex) {
       const nextChain = chain.then((response) => {
-        if (currentIndex === secondCurrent - 1) {
+        if (currentIndex === current - 1) {
           resolve(nextChain)
         }
         return asyncFunc(response)
       }, reject)
       return nextChain
-    }, Promise.resolve(firstState))
+    }, Promise.resolve(initSate))
   })
 }
 
@@ -47,7 +51,9 @@ function combinePromises(initSate: any, current: (number | ((...p: any[]) => Pro
 //   })
 // })
 // 采用组合函数 传入初始值和多个函数
-combinePromises(20, 1, single, double, Three)
+combinePromises({
+  initSate: 20,
+}, single, double, Three)
   .then(res => {
     console.log(res);
   })
