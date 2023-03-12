@@ -35,9 +35,7 @@ const concurrencyRequest = <P extends Object, R = any>(request: (args: P) => Pro
     return new Promise((resolve, reject) => {
       tasks.push(opt)
       executorMap.set(opt, { resolve, reject })
-      if (running === 0) {
-        next()
-      }
+      next()
     })
   }
 }
