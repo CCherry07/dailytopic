@@ -42,12 +42,27 @@ const concurrencyRequest = <P extends Object, R = any>(request: (args: P) => Pro
 
 
 const run = concurrencyRequest(request, { max: 3 })
+const urls = []
 for (let i = 1; i <= 12; i++) {
   const url = `https://jsonplaceholder.typicode.com/todos/${i}`;
-  run({ url }).then(res => {
-    console.log(res);
-  })
+  urls.push(url)
 }
+
+
+
+
+Promise.all(urls.map(url => {
+  return run({ url })
+})).then(res => {
+  console.log(res, 'res');
+})
+
+run({ url: 'https://jsonplaceholder.typicode.com/todos/20' }).then(res => {
+  console.log(res, '20');
+})
+
+
+
 // const executorCallBack: ExecutorCallBack<any> = {
 //   resolve: null,
 //   reject: null
@@ -65,12 +80,66 @@ for (let i = 1; i <= 12; i++) {
 // foo().then()
 
 // bar()
+// function request1({ url }: { url: string }) {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       resolve(url)
+//     }, 1000)
+//   })
+// }
+// const concurrencyRequest1 = <P extends Object, R = any>(request: (args: P) => Promise<R>, options: Options) => {
+//   const tasks: P[] = [] // task 队列
+//   const res: any[] = []
+//   let running = 0
+//   let count = 0
+//   const executorCallBack = {
+//     resolve: null,
+//     reject: null
+//   } as { resolve: any, reject: any }
+//   const max = options.max
+//   function next() {
+//     if (running >= max) return
+//     running++
+//     const opt = tasks.shift()!
+//     return request(opt)
+//       .then(response => res.push(response), executorCallBack.reject)
+//       .finally(() => {
+//         running-- //不管失败还是成功running 都要--
+//         if (tasks.length) {
+//           next()
+//         } else if (count === res.length && executorCallBack.resolve) {
+//           executorCallBack.resolve(res)
+//         }
+//       })
+//   }
+//   //@ts-ignore
+//   concurrencyRequest1.getRes = () => {
+//     return new Promise((resolve, reject) => {
+//       executorCallBack.reject = reject
+//       executorCallBack.resolve = resolve
+//     })
+//   }
+//   return (opt: P) => {
+//     tasks.push(opt)
+//     count++
+//     next()
+//   }
+// }
 
+// const run1 = concurrencyRequest1(request1, { max: 3 });
 
-// run({
-//   url: "url1"
-// }).then(res => {
-//   console.log('then', res.url);
+// ['url1', 'url2', 'url3', 'url4'].forEach(url => {
+//   run1({ url })
+// })
+// @ts-ignore
+// concurrencyRequest1.getRes().then(res => {
+//   console.log(res, '1');
+// })
+
+// run1({ url: 'url5' })
+// //@ts-ignore
+// concurrencyRequest1.getRes().then(res => {
+//   console.log(res, 'asdas');
 // })
 
 // run({

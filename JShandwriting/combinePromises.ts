@@ -53,6 +53,7 @@ function combinePromises(config: Config, ...args: ((...p: any[]) => Promise<any>
 // 采用组合函数 传入初始值和多个函数
 combinePromises({
   initSate: async () => 20,
+  current: 2
 }, single, double, Three)
   .then(res => {
     console.log(res);
