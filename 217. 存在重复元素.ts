@@ -1,12 +1,10 @@
 function containsDuplicate(nums: number[]): boolean {
-    let flog = false
     for(let i=0 ; i<nums.length ; i++){
         if (nums.indexOf(nums[i]) !== nums.lastIndexOf(nums[i])){
-            flog = true
-            return flog
+            return true
         }
     }
-    return flog
+    return false
 };
 
 function containsDuplicate1(nums: number[]): boolean {

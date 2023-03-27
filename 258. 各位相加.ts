@@ -1,5 +1,5 @@
 function addDigits(num: number): number {
-  function def(s: string) {
+  function def(s: string):number {
     if (s.length === 1) return Number(s)
 
     let r = 0
