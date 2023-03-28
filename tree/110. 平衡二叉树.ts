@@ -9,7 +9,7 @@ function isBalanced(root: TreeNode | null): boolean {
   if (Math.abs(getHight(root.left) - getHight(root.right)) > 1) return false // 获取左右子树的高度，如果高度差大于1，返回false
   return isBalanced(root.left) && isBalanced(root.right)
 };
-function getHight(node: TreeNode | null) {
+function getHight(node: TreeNode | null):number {
   if (!node) return 0
   return Math.max(getHight(node.left), getHight(node.right)) + 1
 }
