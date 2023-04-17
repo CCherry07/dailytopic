@@ -6,11 +6,11 @@ function levelOrder(root: TreeNode | null): number[][] {
   while (Queue.length) {
     let size = Queue.length // 本层节点数
     const tier: number[] = [] // 本层节点值
-    while (size--) { // 遍历本层节点数
+    while (size--) { // 遍历本层节点数 (出队列，当处理完本层节点数时，队列中的节点就是下一层的节点)
       const shiftNode = Queue.shift() as TreeNode // 出队列
       tier.push(shiftNode.val) // 本层节点值
-      if (shiftNode.left) Queue.push(shiftNode.left)
-      if (shiftNode.right) Queue.push(shiftNode.right)
+      if (shiftNode.left) Queue.push(shiftNode.left) // 入队列
+      if (shiftNode.right) Queue.push(shiftNode.right) // 入队列
     }
     result.push(tier)
   }
